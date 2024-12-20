@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>4K Video Player</title>
+<!-- HLS.js for HLS stream support -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.0/dist/hls.min.js"></script>
+<!-- Plyr for modern video player controls -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.css">
+<script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
+<style>
+html, body {
+margin: 0;
+padding: 0;
+background: #000;
+height: 100%;
+}
+.plyr {
+height: 100%;
+width: 100%;
+}
+.loading {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: #000;
+z-index: 9999;
+display: flex;
+justify-content: center;
+align-items: center;
+color: #d9230f;
+font-size: 20px;
+font-family: Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+<!-- Loading screen -->
+<div id="loading" class="loading">Loading 4K Video Player...</div>
+
+<!-- Video player -->
+<div>
+<video id="video-player" controls crossorigin="anonymous" playsinline></video>
+</div>
+
+<script>
+// Function to hide the loading screen after the player is ready
+function hideLoadingScreen() {
+document.getElementById('loading').style.display = 'none';
+}
+
+// Function to generate a thumbnail from the video
+function generateThumbnail(videoElement) {
+const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+
+canvas.width = videoElement.videoWidth;
+canvas.height = videoElement.videoHeight;
+
+context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+return canvas.toDataURL('image/jpeg');
+}
+
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+const videoElement = document.getElementById("video-player");
+const hlsSource = "https://github.com/Harrycheema732/M3U8-SUPER/blob/main/super.m3u8"; // New video source
+
+const playerOptions = {
+quality: {
+default: 2160, // Default to 4K quality
+options: [2160, 1080, 720, 480], // Available resolutions
+forced: true,
+onChange: (quality) => {
+if (window.hls) {
+window.hls.levels.forEach((level, index) => {
+if (level.height === quality) {
+window.hls.currentLevel = index;
+}
+});
+}
+}
+}
+};
+
+// Check if the browser supports HLS natively
+if (Hls.isSupported()) {
+const hls = new Hls({
+maxBufferLength: 30,
+maxMaxBufferLength: 120,
+enableWorker: true,
+capLevelToPlayerSize: true,
+startLevel: -1,
+});
+
+hls.loadSource(hlsSource);
+hls.attachMedia(videoElement);
+
+hls.on(Hls.Events.MANIFEST_PARSED, function () {
+const availableQualities = hls.levels.map(level => level.height);
+if (!availableQualities.includes(2160)) {
+console.warn("4K resolution not available in the provided stream.");
+}
+
+playerOptions.quality.options = availableQualities;
+new Plyr(videoElement, playerOptions);
+
+videoElement.addEventListener('loadeddata', () => {
+const thumbnail = generateThumbnail(videoElement);
+videoElement.setAttribute('poster', thumbnail);
+});
+
+hideLoadingScreen();
+});
+
+window.hls = hls;
+} else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
+videoElement.src = hlsSource;
+videoElement.addEventListener("loadedmetadata", () => {
+const thumbnail = generateThumbnail(videoElement);
+videoElement.setAttribute('poster', thumbnail);
+hideLoadingScreen();
+});
+new Plyr(videoElement, playerOptions);
+} else {
+alert("Your browser does not support HLS streaming.");
+hideLoadingScreen();
+}
+});
+</script>
+</body>
+</html>
