@@ -1,14 +1,26 @@
 #EXTM3U
+#EXT-X-VERSION:7
 #EXT-X-TARGETDURATION:8
-#EXT-X-VERSION:3
 #EXT-X-MEDIA-SEQUENCE:21457
 #EXT-X-ALLOW-CACHE:YES
 #EXT-X-PROGRAM-DATE-TIME:2023-06-07T03:56:28Z
+#EXT-X-PLAYLIST-TYPE:VOD
+#EXT-X-INDEPENDENT-SEGMENTS
+
+# Segment 1
 #EXTINF:7.920,
-http://starshare.live/live/Ol80IGT79X/ApDY0Cc3no/157939.ts?play_token=dqhLsYRnvs
+http://starshare.live/live/Ol80IGT79X/go9DZmm8yy/213049.ts?play_token=4SavjQOTBS
+
+# Segment 2
 #EXTINF:8.000,
-http://starshare.live/live/Ol80IGT79X/ApDY0Cc3no/157939.ts?play_token=dqhLsYRnvs
+http://starshare.live/live/Ol80IGT79X/go9DZmm8yy/213049.ts?play_token=4SavjQOTBS
+
+# Segment 3
 #EXTINF:8.000,
-http://starshare.live/live/Ol80IGT79X/ApDY0Cc3no/157939.ts?play_token=dqhLsYRnvs
+http://starshare.live/live/Ol80IGT79X/go9DZmm8yy/213049.ts?play_token=4SavjQOTBS
+
+# Segment 4
 #EXTINF:8.000,
-http://starshare.live/live/Ol80IGT79X/ApDY0Cc3no/157939.ts?play_token=dqhLsYRnvs
+http://starshare.live/live/Ol80IGT79X/go9DZmm8yy/213049.ts?play_token=4SavjQOTBS
+
+#EXT-X-ENDLIST
