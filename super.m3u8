@@ -9,18 +9,18 @@
 
 # Segment 1
 #EXTINF:7.920,
-http://tv.cloudcdn.me/live.ts?channelId=295&uid=7846&deviceMac=00:1A:79:90:73:0E
+
 
 # Segment 2
 #EXTINF:8.000,
-http://tv.cloudcdn.me/live.ts?channelId=295&uid=7846&deviceMac=00:1A:79:90:73:0E
+
 
 # Segment 3
 #EXTINF:8.000,
-http://tv.cloudcdn.me/live.ts?channelId=295&uid=7846&deviceMac=00:1A:79:90:73:0E
+
 
 # Segment 4
 #EXTINF:8.000,
-http://tv.cloudcdn.me/live.ts?channelId=295&uid=7846&deviceMac=00:1A:79:90:73:0E
+
 
 #EXT-X-ENDLIST
